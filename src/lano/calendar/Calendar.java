@@ -23,15 +23,16 @@ public class Calendar {
 	public static void main(String[] args) throws IOException {
 
 		// 입력 받은 숫자(달)의 최대 일수 구하기
+
+		String PROMPT = "cal> ";
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		Calendar calendar = new Calendar();
-		
-		System.out.println("반복횟수를 입력하세요.");
-		int repeat = Integer.parseInt(br.readLine());
-		
-		for (int i = 0; i < repeat; i++) {
+
+		while (true) {
 			System.out.println("달 을 입력하세요.");
+			System.out.print(PROMPT);
 			int month = Integer.parseInt(br.readLine());
+			if (month == -1) break;
 			System.out.println(month + "월은 " + calendar.getMaxDayofMonth(month) + "일까지 있습니다.");
 		}
 		System.out.println("반복 끝");
