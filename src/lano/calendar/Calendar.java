@@ -26,9 +26,14 @@ public class Calendar {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		Calendar calendar = new Calendar();
 		
-		System.out.println("달 을 입력하세요.");
-		int month = Integer.parseInt(br.readLine());
-		System.out.println(month + "월은 " + calendar.getMaxDayofMonth(month) + "일까지 있습니다.");
-		calendar.printSampleCalendar();
+		System.out.println("반복횟수를 입력하세요.");
+		int repeat = Integer.parseInt(br.readLine());
+		
+		for (int i = 0; i < repeat; i++) {
+			System.out.println("달 을 입력하세요.");
+			int month = Integer.parseInt(br.readLine());
+			System.out.println(month + "월은 " + calendar.getMaxDayofMonth(month) + "일까지 있습니다.");
+		}
+		System.out.println("반복 끝");
 	}
 }
