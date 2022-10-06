@@ -33,6 +33,7 @@ public class Calendar {
 			System.out.print(PROMPT);
 			int month = Integer.parseInt(br.readLine());
 			if (month == -1) break;
+			if (month > 12) continue;
 			System.out.println(month + "월은 " + calendar.getMaxDayofMonth(month) + "일까지 있습니다.");
 		}
 		System.out.println("반복 끝");
