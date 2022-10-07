@@ -11,22 +11,31 @@ public class Calendar {
 		return false;
 	}
 
-	public int getMaxDayofMonth(int year, int month) {
+	public int getMaxDayOfMonth(int year, int month) {
 		if (isLeapYear(year))
 			return LEAP_MAX_DAYS[month - 1];
 
 		return MAX_DAYS[month - 1];
 	}
 
-	public void printCalendar(int year, int month) {
+
+
+	public void printCalendar(int year, int month, int weekday) {
 		System.out.printf("   <<%d년%3d월>>\n", year, month);
 		System.out.println(" SU MO TU WE TH FR SA");
-		System.out.println("--------------------");
-		for (int i = 1; i <= getMaxDayofMonth(year, month); i++) {
+		System.out.println("----------------------");
+		
+		for (int j = 0; j < weekday; j++) {
+			System.out.print("   ");
+		}
+		
+		for (int i = 1; i <= getMaxDayOfMonth(year, month); i++) {
 			System.out.printf("%3d", i);
-			if (i % 7 == 0)
+			if ((i + weekday) % 7 == 0)
 				System.out.println();
 		}
+		
+		System.out.println();
 		System.out.println();
 	}
 
