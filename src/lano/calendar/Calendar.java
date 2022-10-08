@@ -1,5 +1,7 @@
 package lano.calendar;
 
+import java.io.IOException;
+
 public class Calendar {
 	private static final int[] MAX_DAYS = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 	private static final int[] LEAP_MAX_DAYS = { 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
@@ -41,7 +43,7 @@ public class Calendar {
 		return date;
 	}
 
-	public void markPlan(int year, int month, int day, int line, int weekday) {
+	public void markPlan(int year, int month, int day, int line, int weekday) throws ClassNotFoundException, IOException {
 		Plan plan = new Plan();
 		int start = line == 0 ? 1 : day - 6;
 
@@ -61,7 +63,7 @@ public class Calendar {
 		}
 	}
 
-	public void printCalendar(int year, int month) {
+	public void printCalendar(int year, int month) throws ClassNotFoundException, IOException {
 		int weekday = getWeekday(year, month);
 		int line = 0;
 
