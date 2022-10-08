@@ -3,13 +3,13 @@ package lano.calendar;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.time.LocalDate;
 
 public class Prompt {
+	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	Calendar calendar = new Calendar();
 
-	public void runCalendarPrompt() throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		Calendar calendar = new Calendar();
-
+	public void runCalendarPrompt() throws IOException {;
 		while (true) {
 			System.out.println("년도를 입력하세요. (-1: 프로그램 종료)");
 			System.out.print("YEAR> ");
@@ -33,8 +33,6 @@ public class Prompt {
 	}
 	
 	public void runPlanPrompt() throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		Calendar calendar = new Calendar();
 		Plan plan = new Plan();
 		
 		System.out.println("+----------------------+");
@@ -46,13 +44,17 @@ public class Prompt {
 		System.out.println("+----------------------+");
 		
 		while (true) {
-			System.out.println("명령 (1, 2, 3, h, q)");
+			System.out.println("명령 (1, 2, 3, 4, h, q)");
 			System.out.print("command> ");
 			String command = br.readLine();
 			
 			if(command.equals("1")) plan.createPlan();
-			else if(command.equals("2")) plan.getPlans();
+			else if(command.equals("2")) plan.getPlansOfDate();
 			else if(command.equals("3")) plan.updatePlan();
+			else if(command.equals("4")) {
+				LocalDate now = LocalDate.now();
+				calendar.printCalendar(now.getYear(), now.getMonthValue());
+			}
 			else if(command.equals("q")) break;
 			else System.out.println("명령 (1, 2, 3, h, q) 중 하나를 입력해 주세요.");
 
