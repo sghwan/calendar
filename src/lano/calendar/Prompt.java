@@ -51,6 +51,7 @@ public class Prompt {
 			String command = br.readLine();
 			
 			if(command.equals("1")) plan.createPlan();
+			else if(command.equals("2")) plan.getPlans();
 			else if(command.equals("q")) break;
 			else System.out.println("명령 (1, 2, 3, h, q) 중 하나를 입력해 주세요.");
 

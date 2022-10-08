@@ -26,4 +26,27 @@ public class Plan {
 		
 		System.out.println("일정이 등록되었습니다.");
 	}
+	
+	public void getPlans() throws IOException {
+		System.out.println("[일정 검색] 날짜를 입력하세요.");
+		System.out.print("> ");
+		String date = br.readLine();
+
+	
+		if(hashMap.containsKey(date)) {
+			ArrayList<String> list = hashMap.get(date);
+			int count = list.size();
+			
+			System.out.println(count + "개의 일정이 있습니다.");
+			
+			for (int i = 0; i < count; i++) {
+				System.out.println((i + 1) + ". " + list.get(i));
+			}
+			
+			return;
+		}
+		
+
+		System.out.println("등록된 일정이 없습니다.");
+	}
 }
