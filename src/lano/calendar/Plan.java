@@ -10,11 +10,12 @@ import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 import java.util.HashMap;
 
 public class Plan {
-	private static Map<String, ArrayList<String>> hashMap;
+	private static Map<Date, ArrayList<String>> hashMap;
 	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 	public Plan() throws IOException, ClassNotFoundException {
@@ -23,7 +24,7 @@ public class Plan {
 		if (file.isFile()) {
 			FileInputStream fis = new FileInputStream(file);
 			ObjectInputStream ois = new ObjectInputStream(fis);
-			hashMap = (HashMap<String, ArrayList<String>>) ois.readObject();
+			hashMap = (HashMap<Date, ArrayList<String>>) ois.readObject();
 			ois.close();
 			fis.close();
 		} else {
@@ -32,17 +33,17 @@ public class Plan {
 
 	}
 
-	public void printPlans(ArrayList<String> list) {
-		int count = list.size();
+	public void printPlans(ArrayList<String> plans) {
+		int count = plans.size();
 
 		System.out.println(count + "개의 일정이 있습니다.");
 
 		for (int i = 0; i < count; i++) {
-			System.out.println((i + 1) + ". " + list.get(i));
+			System.out.println((i + 1) + ". " + plans.get(i));
 		}
 	}
 
-	public boolean checkPlan(String date) {
+	public boolean checkPlan(Date date) {
 		if (hashMap.containsKey(date))
 			return true;
 
@@ -67,14 +68,14 @@ public class Plan {
 		}
 	}
 
-	public void createPlan(String date, String todo) {
+	public void createPlan(Date date, String todo) {
 		ArrayList<String> list = hashMap.getOrDefault(date, new ArrayList<>());
 		list.add(todo);
 		hashMap.put(date, list);
 		saveData();
 	}
 
-	public ArrayList<String> getPlansOfDate(String date) {
+	public ArrayList<String> getPlansOfDate(Date date) {
 		if (hashMap.containsKey(date)) {
 			return hashMap.get(date);
 		} else {
@@ -82,7 +83,7 @@ public class Plan {
 		}
 	}
 
-	public void updatePlan(String date, int num, String todo, ArrayList<String> plans) {
+	public void updatePlan(Date date, int num, String todo, ArrayList<String> plans) {
 		plans.set(num - 1, todo);
 		hashMap.put(date, plans);
 		saveData();

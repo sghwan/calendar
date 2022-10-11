@@ -3,8 +3,11 @@ package lano.calendar;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Prompt {
 	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -26,10 +29,10 @@ public class Prompt {
 		System.out.println("+----------------------+");
 	}
 
-	public void cmdRegister(Plan plan) throws IOException {
+	public void cmdRegister(Plan plan) throws IOException, ParseException {
 		System.out.println("[일정 등록] 날짜를 입력하세요. 형식ex) 2022-10-08");
 		System.out.print("date> ");
-		String date = br.readLine();
+		Date date = new SimpleDateFormat("yyyy-MM-dd").parse(br.readLine());
 
 		System.out.println("일정을 입력하세요.");
 		System.out.print("todo> ");
@@ -40,10 +43,10 @@ public class Prompt {
 		System.out.println("일정이 등록되었습니다.");
 	}
 
-	public void cmdRead(Plan plan) throws IOException {
+	public void cmdRead(Plan plan) throws IOException, ParseException {
 		System.out.println("[일정 검색] 날짜를 입력하세요. 형식ex) 2022-10-08");
 		System.out.print("date> ");
-		String date = br.readLine();
+		Date date = new SimpleDateFormat("yyyy-MM-dd").parse(br.readLine());
 
 		ArrayList<String> plans = plan.getPlansOfDate(date);
 
@@ -54,10 +57,10 @@ public class Prompt {
 		}
 	}
 
-	public void cmdUpdate(Plan plan) throws IOException {
+	public void cmdUpdate(Plan plan) throws IOException, ParseException {
 		System.out.println("[일정 수정] 날짜를 입력하세요. 형식ex) 2022-10-08");
 		System.out.print("date> ");
-		String date = br.readLine();
+		Date date = new SimpleDateFormat("yyyy-MM-dd").parse(br.readLine());
 
 		ArrayList<String> plans = plan.getPlansOfDate(date);
 
@@ -78,7 +81,7 @@ public class Prompt {
 		}
 	}
 
-	public void runCalendarPrompt() throws IOException {
+	public void runCalendarPrompt() throws IOException, ParseException {
 		while (true) {
 			System.out.println("년도를 입력하세요. (-1: 프로그램 종료)");
 			System.out.print("YEAR> ");
@@ -101,7 +104,7 @@ public class Prompt {
 		System.out.println("END");
 	}
 
-	public void runPlanPrompt() throws IOException {
+	public void runPlanPrompt() throws IOException, ParseException {
 		printMenu();
 
 		while (true) {

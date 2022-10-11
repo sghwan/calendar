@@ -1,5 +1,9 @@
 package lano.calendar;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Calendar {
 	private static final int[] MAX_DAYS = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 	private static final int[] LEAP_MAX_DAYS = { 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
@@ -33,15 +37,16 @@ public class Calendar {
 		return day % 7 + 1;
 	}
 
-	public String getDate(int year, int month, int day) {
+	public Date getDate(int year, int month, int day) throws ParseException {
 		String str_month = month > 9 ? Integer.toString(month) : "0" + month;
 		String str_day = day > 9 ? Integer.toString(day) : "0" + day;
-		String date = year + "-" + str_month + "-" + str_day;
+		String str_date = year + "-" + str_month + "-" + str_day;
+		Date date = new SimpleDateFormat("yyyy-MM-dd").parse(str_date);
 
 		return date;
 	}
 
-	public void markPlan(int year, int month, int day, int line, int weekday, Plan plan) {
+	public void markPlan(int year, int month, int day, int line, int weekday, Plan plan) throws ParseException {
 		int start = line == 0 ? 1 : day - 6;
 
 		if (line == 0) {
@@ -51,7 +56,7 @@ public class Calendar {
 		}
 
 		for (int i = start; i <= day; i++) {
-			String date = getDate(year, month, i);
+			Date date = getDate(year, month, i);
 			boolean flag = plan.checkPlan(date);
 			if (flag)
 				System.out.print("  ·");
@@ -60,7 +65,7 @@ public class Calendar {
 		}
 	}
 
-	public void printCalendar(int year, int month, Plan plan) {
+	public void printCalendar(int year, int month, Plan plan) throws ParseException {
 		int weekday = getWeekday(year, month);
 		int line = 0;
 

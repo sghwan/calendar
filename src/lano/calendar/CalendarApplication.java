@@ -1,6 +1,7 @@
 package lano.calendar;
 
 import java.io.IOException;
+import java.text.ParseException;
 
 public class CalendarApplication {
 
@@ -8,7 +9,7 @@ public class CalendarApplication {
 		try {
 			Prompt p = new Prompt(new Calendar(), new Plan());
 			p.runPlanPrompt();
-		} catch (ClassNotFoundException | IOException e) {
+		} catch (ClassNotFoundException | IOException | ParseException e) {
 			e.printStackTrace();
 			System.out.println(e);
 		}
