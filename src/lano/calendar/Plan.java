@@ -3,6 +3,7 @@ package lano.calendar;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,7 +14,7 @@ import java.util.Map;
 import java.util.HashMap;
 
 public class Plan {
-	public static Map<String, ArrayList<String>> hashMap;
+	private static Map<String, ArrayList<String>> hashMap;
 	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 	public Plan() throws IOException, ClassNotFoundException {
@@ -48,73 +49,42 @@ public class Plan {
 		return false;
 	}
 
-	public void saveData() throws IOException {
+	public void saveData() {
 		File store = new File("store_file");
-		FileOutputStream fos = new FileOutputStream(store);
-		ObjectOutputStream oos = new ObjectOutputStream(fos);
-
-		oos.writeObject(hashMap);
-		oos.flush();
-		oos.close();
-		fos.close();
+		try {
+			FileOutputStream fos = new FileOutputStream(store);
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(hashMap);
+			oos.flush();
+			oos.close();
+			fos.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			System.out.println("저장할 파일을 찾지 못하였습니다.");
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println("파일 저장중 에러가 발생했습니다.");
+		}
 	}
 
-	public void createPlan() throws IOException {
-		System.out.println("[일정 등록] 날짜를 입력하세요. 형식ex) 2022-10-08");
-		System.out.print("date> ");
-		String date = br.readLine();
-
-		System.out.println("일정을 입력하세요.");
-		System.out.print("todo> ");
-		String todo = br.readLine();
-
+	public void createPlan(String date, String todo) {
 		ArrayList<String> list = hashMap.getOrDefault(date, new ArrayList<>());
 		list.add(todo);
 		hashMap.put(date, list);
 		saveData();
-
-		System.out.println("일정이 등록되었습니다.");
 	}
 
-	public void getPlansOfDate() throws IOException {
-		System.out.println("[일정 검색] 날짜를 입력하세요. 형식ex) 2022-10-08");
-		System.out.print("date> ");
-		String date = br.readLine();
-
+	public ArrayList<String> getPlansOfDate(String date) {
 		if (hashMap.containsKey(date)) {
-			ArrayList<String> list = hashMap.get(date);
-			printPlans(list);
-
-			return;
+			return hashMap.get(date);
+		} else {
+			return null;
 		}
-
-		System.out.println("등록된 일정이 없습니다.");
 	}
 
-	public void updatePlan() throws IOException {
-		System.out.println("[일정 수정] 날짜를 입력하세요. 형식ex) 2022-10-08");
-		System.out.print("date> ");
-		String date = br.readLine();
-
-		if (hashMap.containsKey(date)) {
-			ArrayList<String> list = hashMap.get(date);
-			printPlans(list);
-
-			System.out.println("원하는 일정 번호를 선택해 주세요.");
-			System.out.print("num> ");
-			int num = Integer.parseInt(br.readLine());
-
-			System.out.println("일정을 수정하세요.");
-			System.out.print("todo> ");
-			String todo = br.readLine();
-
-			list.set(num - 1, todo);
-			hashMap.put(date, list);
-			saveData();
-
-			return;
-		}
-
-		System.out.println("등록된 일정이 없습니다.");
+	public void updatePlan(String date, int num, String todo, ArrayList<String> plans) {
+		plans.set(num - 1, todo);
+		hashMap.put(date, plans);
+		saveData();
 	}
 }
